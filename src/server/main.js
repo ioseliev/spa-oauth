@@ -4,7 +4,7 @@ import ViteExpress from "vite-express";
 const app = express();
 
 app.get("/token", (req, res) => {
-  // TODO
+  res.send('\'Tis a message from the back-end!');
 });
 
 ViteExpress.listen(app, 3000, () =>
