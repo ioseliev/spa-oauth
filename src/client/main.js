@@ -33,7 +33,8 @@ const needs_login = !queryString.has('code');
   app.appendChild(repos_ul);
 
   if (!needs_login) {
-    const token = fetch("/api/token", {
+    const token = null;
+    fetch("/api/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -46,10 +47,9 @@ const needs_login = !queryString.has('code');
         throw new Error(data.error);
       }
       
-      return data.token;
+      token = data.token;
     }).catch((error) => {
       repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
-      return null;
     });
 
     if (token) {
