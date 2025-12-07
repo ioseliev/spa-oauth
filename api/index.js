@@ -30,7 +30,7 @@ app.post("/api", express.json(), (req, res) => {
     }
   }).then((data) => {
     if (data.error) {
-      throw new Error(`${data.error}: ${data.error_description}`);
+      throw new Error(`${data.error} - ${data.error_description}`);
     } else {
       return res.status(200).json({
         token: data.access_token

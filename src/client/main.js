@@ -43,7 +43,9 @@ const needs_login = !queryString.has('code');
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error(`Local API returned ${response.status} (${response.statusText})`);
+        response.json().then((data) => {
+          throw new Error(data.message);
+        });
       }
     }).then((data) => {
       const temp = document.createElement("li");
