@@ -44,19 +44,17 @@ app.post("/api/token", express.json(), (req, res) => {
 });
 
 app.get("/api/repos", (req, res) => {
-  return res.status(200).json(
-    fetch("https://api.github.com/user/repos", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${req.headers['token'] ? req.headers['token'] : null}`
-      }
-    }).then((response) => {
-      return response.json();
-    }).then((data) => {
-      return data;
-    })
-  )
+  fetch("https://api.github.com/user/repos", {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${req.headers['token'] ? req.headers['token'] : null}`
+    }
+  }).then((response) => {
+    return response.json();
+  }).then((data) => {
+    return res.status(200).json(data);
+  });
 });
 
 export default app;
