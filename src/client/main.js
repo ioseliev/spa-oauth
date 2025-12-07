@@ -31,4 +31,25 @@ const needs_login = !queryString.has('code');
     app.appendChild(logout_btn);
   }
   app.appendChild(repos_ul);
+
+  if (!needs_login) {
+    fetch("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ code: queryString.get("code") })
+    }).then((response) => {
+      if (response.ok) {
+        const token = response.json().token.substring(0, 5);
+        const temp = document.createElement("li");
+        temp.innerText = token;
+        repos_ul.appendChild(temp);
+      } else {
+        throw new Error(response.text());
+      }
+    }).catch((error) => {
+      repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
+    });
+  }
 })();
