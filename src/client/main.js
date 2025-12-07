@@ -33,7 +33,7 @@ const needs_login = !queryString.has('code');
   app.appendChild(repos_ul);
 
   if (!needs_login) {
-    const token = fetch("/token", {
+    const token = fetch("/api/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -53,7 +53,7 @@ const needs_login = !queryString.has('code');
     });
 
     if (token) {
-      fetch("/api", {
+      fetch("/api/repos", {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
