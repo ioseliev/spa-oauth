@@ -55,12 +55,7 @@ const needs_login = !queryString.has('code');
     if (token) {
       fetch("/api/repos", {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          token: token
-        })
+        token: token
       }).then((response) => {
         return response.json();
       }).then((data) => {
