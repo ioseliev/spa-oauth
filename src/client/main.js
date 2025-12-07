@@ -46,7 +46,7 @@ const needs_login = !queryString.has('code');
         throw new Error(response.text());
       }
     }).then((data) => {
-      const tmep = document.createElement("li");
+      const temp = document.createElement("li");
       temp.innerText = JSON.stringify(data);
       repos_ul.appendChild(temp);
     }).catch((error) => {
