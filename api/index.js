@@ -28,9 +28,7 @@ app.post("/api", express.json(), (req, res) => {
       throw new Error(`Error exchanging Authorization Code grant for access token (API returned ${response.status})`);
     }
   }).then((data) => {
-    return res.status(200).json({
-      token: data.access_token
-    });
+    return res.status(200).json(data);
   }).catch((error) => {
     return res.status(403).json({
       message: error.message
