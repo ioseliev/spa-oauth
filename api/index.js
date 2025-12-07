@@ -18,6 +18,7 @@ app.post("/api", express.json(), (req, res) => {
     },
     body: JSON.stringify({
       client_id: process.env.VITE_CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
       code: req.body.code,
       redirect_uri: process.env.VITE_REDIRECT_URI
     })
