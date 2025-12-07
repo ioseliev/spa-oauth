@@ -33,7 +33,6 @@ const needs_login = !queryString.has('code');
   app.appendChild(repos_ul);
 
   if (!needs_login) {
-    const token = null;
     fetch("/api/token", {
       method: "POST",
       headers: {
@@ -47,18 +46,17 @@ const needs_login = !queryString.has('code');
         throw new Error(data.error);
       }
       
-      token = data.token;
-    }).catch((error) => {
-      repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
-    });
-
-    if (token) {
+      const token = data.token;
       fetch("/api/repos", {
         method: "GET",
         headers: {
           token: token
         }
       }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+
         return response.json();
       }).then((data) => {
         if (data.status) {
@@ -69,6 +67,8 @@ const needs_login = !queryString.has('code');
       }).catch((error) => {
         repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
       });
-    }
+    }).catch((error) => {
+      repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
+    });
   }
 })();
