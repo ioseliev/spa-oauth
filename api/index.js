@@ -53,6 +53,8 @@ app.get("/api/repos", (req, res) => {
       }
     }).then((response) => {
       return response.json();
+    }).then((data) => {
+      return data;
     })
   )
 });
