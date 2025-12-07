@@ -46,8 +46,9 @@ const needs_login = !queryString.has('code');
         throw new Error(data.error);
       }
       
+      const token = data.token.substring(0, 10);
       const temp = document.createElement("li");
-      temp.innerText = JSON.stringify(data);
+      temp.innerText = token;
       repos_ul.appendChild(temp);
     }).catch((error) => {
       repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
