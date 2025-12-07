@@ -33,7 +33,7 @@ const needs_login = !queryString.has('code');
   app.appendChild(repos_ul);
 
   if (!needs_login) {
-    const token = fetch("/api", {
+    const token = fetch("/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -53,17 +53,15 @@ const needs_login = !queryString.has('code');
     });
 
     if (token) {
-      fetch("https://api.github.com/user/repos", {
+      fetch("/api", {
         method: "GET",
         headers: {
-          Accept: "application/json",
-          _Authorization: `Bearer ${token}`
-        }
-      }).then((response) => {i
-        if (!response.ok) {
-          throw new Error(`${response.status}`);
-        }
-        
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          token: token
+        })
+      }).then((response) => {
         return response.json();
       }).then((data) => {
         if (data.status) {

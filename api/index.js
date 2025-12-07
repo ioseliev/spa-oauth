@@ -3,7 +3,7 @@ import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.post("/api", express.json(), (req, res) => {
+app.post("/token", express.json(), (req, res) => {
   if (!req.body || typeof req.body !== "object" || !req.body.code) {
     return res.status(400).json({
       error: "Missing Authorization Code grant"
@@ -41,6 +41,20 @@ app.post("/api", express.json(), (req, res) => {
       error: error.message
     });
   });
+});
+
+app.get("/api", express.json(), (req, res) => {
+  return res.status(200).json(
+    fetch("https://api.github.com/user/repos", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${req.body.token ? req.body.token : null}`
+      }
+    }).then((response) => {
+      return response.json();
+    })
+  )
 });
 
 export default app;
