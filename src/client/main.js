@@ -33,7 +33,7 @@ const needs_login = !queryString.has('code');
   app.appendChild(repos_ul);
 
   if (!needs_login) {
-    fetch("/api", {
+    const token = fetch("/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -46,12 +46,34 @@ const needs_login = !queryString.has('code');
         throw new Error(data.error);
       }
       
-      const token = data.token.substring(0, 10);
-      const temp = document.createElement("li");
-      temp.innerText = token;
-      repos_ul.appendChild(temp);
+      return data.token;
     }).catch((error) => {
       repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
+      return null;
     });
+
+    if (token) {
+      fetch("https://api.github.com/user/repos", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          _Authorization: `Bearer ${token}`
+        }
+      }).then((response) => {i
+        if (!response.ok) {
+          throw new Error(`${response.status}`);
+        }
+        
+        return response.json();
+      }).then((data) => {
+        if (data.status) {
+          throw new Error(`${data.status} - ${data.message}`);
+        }
+
+        repos_ul.innerText = JSON.stringify(data);
+      }).catch((error) => {
+        repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
+      });
+    }
   }
 })();
