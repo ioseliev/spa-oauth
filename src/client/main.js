@@ -1,4 +1,5 @@
 import "./style.css";
+import { getRedirectUrl } from './utils';
 
 
 const app = document.querySelector("#app");
@@ -15,7 +16,7 @@ const needs_login = !queryString.has('code');
 
   // Login button
   login_btn.innerText = "Log in with GitHub";
-  login_btn.href = "/?code=..."; // TODO
+  login_btn.href = getRedirectUrl(); // TODO
 
   // Logout button
   logout_btn.innerText = "Log out";
