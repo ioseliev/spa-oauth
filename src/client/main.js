@@ -41,9 +41,8 @@ const needs_login = !queryString.has('code');
       body: JSON.stringify({ code: queryString.get("code") })
     }).then((response) => {
       if (response.ok) {
-        const token = response.json().token.substring(0, 5);
         const temp = document.createElement("li");
-        temp.innerText = token;
+        temp.innerText = response.text();
         repos_ul.appendChild(temp);
       } else {
         throw new Error(response.text());
