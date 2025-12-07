@@ -40,14 +40,12 @@ const needs_login = !queryString.has('code');
       },
       body: JSON.stringify({ code: queryString.get("code") })
     }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        response.json().then((data) => {
-          throw new Error(data.message);
-        });
-      }
+      return response.json();
     }).then((data) => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
       const temp = document.createElement("li");
       temp.innerText = JSON.stringify(data);
       repos_ul.appendChild(temp);

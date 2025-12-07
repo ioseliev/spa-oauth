@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 app.post("/api", express.json(), (req, res) => {
   if (!req.body || typeof req.body !== "object" || !req.body.code) {
     return res.status(400).json({
-      message: "Missing Authorization Code grant"
+      error: "Missing Authorization Code grant"
     });
   }
   
@@ -38,7 +38,7 @@ app.post("/api", express.json(), (req, res) => {
     }
   }).catch((error) => {
     return res.status(403).json({
-      message: error.message
+      error: error.message
     });
   });
 });
