@@ -15,9 +15,11 @@ app.post("/api", express.json(), (req, res) => {
     headers: {
       Accept: "application/json"
     },
-    client_id: process.env.VITE_CLIENT_ID,
-    code: req.body.code,
-    redirect_uri: process.env.VITE_REDIRECT_URI
+    body: JSON.stringify({
+      client_id: process.env.VITE_CLIENT_ID,
+      code: req.body.code,
+      redirect_uri: process.env.VITE_REDIRECT_URI
+    })
   }).then((response) => {
     if (response.ok) {
       return res.status(200).json({
