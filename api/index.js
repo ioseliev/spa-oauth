@@ -22,7 +22,9 @@ app.post("/api", express.json(), (req, res) => {
         token: response.json().access_token
       });
     } else {
-      return res.status(403).json(response.json());
+      return res.status(403).json({
+        message: `Error exchanging Authorization Code grant for access token (API returned ${response.status})`
+      });
     }
   });
 });
