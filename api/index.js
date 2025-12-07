@@ -1,12 +1,30 @@
 import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.get('/api', (req, res) => {
-  res.send("'Tis a message from the back-end!");
+app.post("/api", express.json(), (req, res) => {
+  if (!req.body || typeof req.body !== "object" || !req.body.code) {
+    return res.status(400).json({
+      message: "Missing Authorization Code grant"
+    });
+  }
+  
+  fetch("https://github.com/login/oauth/access_token", {
+    method: "POST",
+    headers: {
+      Accept: "application/json"
+    },
+    body: JSON.stringify({ code: req.body.code })
+  }).then((response) => {
+    if (response.ok) {
+      return res.status(200).json({
+        token: response.json().access_token
+      });
+    } else {
+      return res.status(403).json(response.json());
+    }
+  });
 });
 
 export default app;
