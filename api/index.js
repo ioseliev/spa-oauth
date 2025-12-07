@@ -15,7 +15,9 @@ app.post("/api", express.json(), (req, res) => {
     headers: {
       Accept: "application/json"
     },
-    body: JSON.stringify({ code: req.body.code })
+    client_id: import.meta.env.VITE_CLIENT_ID,
+    code: req.body.code,
+    redirect_uri: import.meta.env.VITE_REDIRECT_URI
   }).then((response) => {
     if (response.ok) {
       return res.status(200).json({
