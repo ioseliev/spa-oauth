@@ -68,7 +68,7 @@ const needs_login = !queryString.has('code');
           if (element.private) {
             li.className = 'private';
           }
-          li.innerHTML = `<a href="${element.html_url}">${element.full_name}</a>`;
+          li.innerHTML = `<a href="${element.html_url}" target="_blank" rel="noreferrer noopener">${element.full_name}</a>`;
           repos_ul.appendChild(li);
         });
       }).catch((error) => {
