@@ -63,7 +63,11 @@ const needs_login = !queryString.has('code');
           throw new Error(`${data.status} - ${data.message}`);
         }
 
-        repos_ul.innerText = JSON.stringify(data);
+        data.forEach((element) => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${element.html_url}">${element.full_name}</a>`;
+          repos_ul.appendChild(li);
+        });
       }).catch((error) => {
         repos_ul.innerHTML = `<li class="error">Error: ${error.message}</li>`;
       });
