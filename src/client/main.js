@@ -65,6 +65,9 @@ const needs_login = !queryString.has('code');
 
         data.forEach((element) => {
           const li = document.createElement('li');
+          if (element.private) {
+            li.className = 'private';
+          }
           li.innerHTML = `<a href="${element.html_url}">${element.full_name}</a>`;
           repos_ul.appendChild(li);
         });

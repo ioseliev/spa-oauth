@@ -45,6 +45,12 @@ ul#repos li {
   background: #34495E
 }
 
+ul#repos li.private {
+  color: #F1C40F;
+  background: #F39C12;
+  opacity: 0.8
+}
+
 ul#repos li.error {
   background: #E74C3C
 }
