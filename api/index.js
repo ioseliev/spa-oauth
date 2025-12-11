@@ -4,9 +4,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.post("/api/token", express.json(), (req, res) => {
-  if (!req.body || typeof req.body !== "object" || !req.body.code) {
+  if (!req.body || typeof req.body !== "object" || !req.body.code || !req.body.code_verifier) {
     return res.status(400).json({
-      error: "Missing Authorization Code grant"
+      error: "Missing Authorization Code grant and/or code verifier."
     });
   }
   
@@ -20,6 +20,7 @@ app.post("/api/token", express.json(), (req, res) => {
       client_id: process.env.VITE_CLIENT_ID,
       client_secret: process.env.CLIENT_SECRET,
       code: req.body.code,
+      code_verifier: req.body.code_verifier,
       redirect_uri: process.env.VITE_REDIRECT_URI
     })
   }).then((response) => {
