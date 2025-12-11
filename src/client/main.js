@@ -35,8 +35,8 @@ const needs_login = !queryString.has('code');
 
   const AUTH_CONFIG = {
     authEndpoint: "https://github.com/login/oauth/authorize",
-    clientId: "Ov23liCAkJQZP7wDEXGy", 
-    redirectUri: "https://spa-oauth.vercel.app/", 
+    clientId: import.meta.env.VITE_CLIENT_ID, 
+    redirectUri: import.meta.env.VITE_REDIRECT_URI, 
     scopes: "read:user"
   };
 
