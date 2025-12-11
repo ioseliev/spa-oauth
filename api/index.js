@@ -24,13 +24,11 @@ app.post("/api/token", express.json(), (req, res) => {
       redirect_uri: process.env.VITE_REDIRECT_URI
     })
   }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error(`Error exchanging Authorization Code grant for access token (API returned ${response.status})`);
-    }
-  }).then((data) => {
-    if (data.error) {
+    return (response.status, response.json());
+  }).then((status, data) => {
+    if (status != 200) {
+      throw new Error(data);
+    } else if (data.error) {
       throw new Error(`${data.error} - ${data.error_description}`);
     } else {
       return res.status(200).json({
