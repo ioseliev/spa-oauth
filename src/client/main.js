@@ -87,6 +87,7 @@ const needs_login = !queryString.has('code');
   repos_ul.id = "repos";
 
   if (needs_login) {
+    sessionStorage.clear();
     app.appendChild(login_btn);
   } else {
     app.appendChild(logout_btn);
